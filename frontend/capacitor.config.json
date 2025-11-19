@@ -1,0 +1,11 @@
+{
+  "appId": "com.medintel.app",
+  "appName": "MedIntel",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

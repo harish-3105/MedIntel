@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MedIntel</string>
+    <string name="title_activity_main">MedIntel</string>
+    <string name="package_name">com.medintel.app</string>
+    <string name="custom_url_scheme">com.medintel.app</string>
+</resources>

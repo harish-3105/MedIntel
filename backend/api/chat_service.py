@@ -7,7 +7,7 @@ import json
 import logging
 import os
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -781,7 +781,7 @@ class IntentClassifier:
     ]
 
     @classmethod
-    def classify_intent(cls, message: str, history: List[Message]) -> tuple[str, float]:
+    def classify_intent(cls, message: str, history: List[Message]) -> Tuple[str, float]:
         """
         Classify the intent of the user message
 

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download MedIntel App</title>
+    <link rel="icon" href="/icon-192.svg" type="image/svg+xml">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #050618 0%, #061225 50%, #050618 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 120px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        h1 {
+            font-size: 48px;
+            color: #28f7ce;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-size: 18px;
+            color: #a0aec0;
+            margin-bottom: 40px;
+        }
+        
+        .download-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(40, 247, 206, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #28f7ce 0%, #20c9a8 100%);
+            color: #050618;
+            padding: 18px 50px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(40, 247, 206, 0.3);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(40, 247, 206, 0.5);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .pwa-btn {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(74, 85, 104, 0.3);
+        }
+        
+        .pwa-btn:hover {
+            box-shadow: 0 6px 30px rgba(74, 85, 104, 0.5);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(40, 247, 206, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .feature-icon {
+            font-size: 32px;
+        }
+        
+        .feature-text {
+            flex: 1;
+        }
+        
+        .feature-title {
+            color: #28f7ce;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .feature-desc {
+            color: #a0aec0;
+            font-size: 14px;
+        }
+        
+        .install-note {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(40, 247, 206, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(40, 247, 206, 0.3);
+        }
+        
+        .install-note h3 {
+            color: #28f7ce;
+            margin-bottom: 15px;
+        }
+        
+        .install-steps {
+            text-align: left;
+            color: #a0aec0;
+            line-height: 1.8;
+        }
+        
+        .install-steps li {
+            margin: 8px 0;
+            padding-left: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(40, 247, 206, 0.2);
+            color: #28f7ce;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            .logo {
+                font-size: 80px;
+            }
+            
+            .download-section {
+                padding: 25px;
+            }
+            
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+                margin: 8px 0;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🏥</div>
+        <h1>MedIntel</h1>
+        <p class="tagline">Your AI-Powered Health Companion</p>
+        
+        <div class="download-section">
+            <h2 style="margin-bottom: 20px; color: #28f7ce;">Get the App</h2>
+            
+            <!-- APK Download Button -->
+            <a href="#" class="download-btn" id="apk-download" download>
+                <span>📥</span>
+                <span>Download Android App</span>
+                <span class="badge">25 MB</span>
+            </a>
+            
+            <!-- PWA Install Button -->
+            <button onclick="installPWA()" class="download-btn pwa-btn" id="pwa-install" style="display: none;">
+                <span>⚡</span>
+                <span>Install Web App</span>
+                <span class="badge">INSTANT</span>
+            </button>
+            
+            <div style="margin-top: 20px; color: #a0aec0; font-size: 14px;">
+                <p>✨ No registration required • 🔒 Privacy-focused • 🚀 Fast & lightweight</p>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">💊</div>
+                <div class="feature-text">
+                    <div class="feature-title">Order Medicines</div>
+                    <div class="feature-desc">30+ medicines with home delivery</div>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-text">
+                    <div class="feature-title">AI Symptom Checker</div>
+                    <div class="feature-desc">Instant health analysis powered by AI</div>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📍</div>
+                <div class="feature-text">
+                    <div class="feature-title">GPS Location</div>
+                    <div class="feature-desc">Find nearby pharmacies & stores</div>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🛒</div>
+                <div class="feature-text">
+                    <div class="feature-title">Smart Cart</div>
+                    <div class="feature-desc">Save favorites & quick reorders</div>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">💬</div>
+                <div class="feature-text">
+                    <div class="feature-title">Health Chat</div>
+                    <div class="feature-desc">24/7 medical information assistant</div>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <div class="feature-text">
+                    <div class="feature-title">Works Offline</div>
+                    <div class="feature-desc">Access health info anytime, anywhere</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="install-note">
+            <h3>📱 How to Install PWA (Web App)</h3>
+            <ol class="install-steps">
+                <li><strong>On Android (Chrome):</strong> Visit the website → Menu (⋮) → "Add to Home screen"</li>
+                <li><strong>On iOS (Safari):</strong> Visit the website → Share button → "Add to Home Screen"</li>
+                <li><strong>On Desktop:</strong> Look for install icon (⊕) in address bar → Click "Install"</li>
+            </ol>
+        </div>
+        
+        <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="color: #a0aec0; font-size: 14px;">
+                Made with ❤️ for better healthcare accessibility
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // PWA Installation
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('beforeinstallprompt event fired');
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('pwa-install').style.display = 'inline-flex';
+        });
+        
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('To install the web app:\n\n• Chrome/Edge: Menu → "Install MedIntel"\n• Safari: Share → "Add to Home Screen"');
+            }
+        }
+        
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            alert('✅ MedIntel installed successfully!');
+        });
+        
+        // APK Download Link (UPDATE THIS WITH YOUR ACTUAL LINK)
+        const APK_DOWNLOAD_LINK = 'YOUR_APK_LINK_HERE'; // Replace with actual link
+        
+        document.getElementById('apk-download').addEventListener('click', function(e) {
+            if (APK_DOWNLOAD_LINK === 'YOUR_APK_LINK_HERE') {
+                e.preventDefault();
+                alert('⚠️ APK download link not configured yet.\n\nPlease follow the DEPLOYMENT_GUIDE.md to:\n1. Build the Android APK\n2. Upload to Google Drive/GitHub\n3. Update the link in this file');
+            } else {
+                this.href = APK_DOWNLOAD_LINK;
+            }
+        });
+        
+        // Show PWA button if app is installable
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(() => {
+                console.log('Service Worker is ready');
+            });
+        }
+    </script>
+</body>
+</html>

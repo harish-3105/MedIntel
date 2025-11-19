@@ -2,9 +2,10 @@
 import { useState } from 'react';
 import ChatPage from './pages/ChatPage.jsx';
 import NearbyPage from './pages/NearbyPage.jsx';
+import ShoppingPage from './pages/ShoppingPage.jsx';
 
 function App() {
-  const [activeView, setActiveView] = useState('chat'); // 'chat' or 'nearby'
+  const [activeView, setActiveView] = useState('chat'); // 'chat', 'nearby', or 'shopping'
 
   return (
     <div className="flex h-screen flex-col">
@@ -38,12 +39,22 @@ function App() {
           >
             🗺️ Nearby
           </button>
+          <button
+            onClick={() => setActiveView('shopping')}
+            className={`rounded-xl px-6 py-2 text-sm font-semibold transition ${
+              activeView === 'shopping'
+                ? 'bg-primary text-background'
+                : 'text-white/70 hover:text-white'
+            }`}
+          >
+            🛒 Shopping
+          </button>
         </div>
       </nav>
 
       {/* Content */}
       <div className="flex-1 overflow-hidden">
-        {activeView === 'chat' ? <ChatPage /> : <NearbyPage />}
+        {activeView === 'chat' ? <ChatPage /> : activeView === 'nearby' ? <NearbyPage /> : <ShoppingPage />}
       </div>
     </div>
   );
