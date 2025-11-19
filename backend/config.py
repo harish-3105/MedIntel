@@ -59,7 +59,8 @@ ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite dev server
     "http://127.0.0.1:5173",  # Vite dev server (alternative)
     "http://localhost:8000",
-    "https://astonishing-empathy-production.up.railway.app",  # Frontend production
+    "https://astonishing-empathy-production.up.railway.app",  # Railway Frontend
+    "https://medintel-frontend.onrender.com",  # Render Frontend
     "*",  # Allow all origins for deployment
 ]
 
