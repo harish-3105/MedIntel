@@ -132,6 +132,12 @@ async def chat_v1(chat_request: ChatRequest):
         )
 
 
+@app.post("/v1/chat")
+async def chat_v1_no_prefix(chat_request: ChatRequest):
+    """Chat endpoint v1 without /api prefix (for proxy)"""
+    return await chat_v1(chat_request)
+
+
 @app.post("/api/chat")
 async def chat_simple(request: Request):
     """Alternative chat endpoint - accepts any JSON"""
