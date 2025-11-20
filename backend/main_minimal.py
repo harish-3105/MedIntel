@@ -82,6 +82,26 @@ async def api_status():
     }
 
 
+@app.post("/api/v1/chat")
+async def chat(request: dict):
+    """Basic chat endpoint"""
+    try:
+        message = request.get("message", "")
+        logger.info(f"Received chat message: {message}")
+        
+        return {
+            "response": f"Echo: {message}",
+            "status": "success",
+            "note": "This is a minimal version. Full AI features require complete deployment."
+        }
+    except Exception as e:
+        logger.error(f"Chat error: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": str(e), "message": "Chat processing failed"}
+        )
+
+
 # Global exception handler
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc):

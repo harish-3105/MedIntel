@@ -8,7 +8,11 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const API_URL = process.env.API_URL || 'https://medintel-production.up.railway.app';
+const API_URL = process.env.API_URL || 'https://medintel-backend.onrender.com';
+
+// Add body parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Verify dist folder exists
 const distPath = path.join(__dirname, 'dist');
@@ -30,20 +34,39 @@ app.use('/api', async (req, res) => {
   
   try {
     const fetch = (await import('node-fetch')).default;
-    const response = await fetch(url, {
+    
+    const options = {
       method: req.method,
       headers: {
-        ...req.headers,
-        host: new URL(API_URL).host,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
-      body: req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body) : undefined,
-    });
+    };
     
-    const data = await response.text();
-    res.status(response.status).send(data);
+    // Add body for POST/PUT/PATCH requests
+    if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
+      options.body = JSON.stringify(req.body);
+    }
+    
+    const response = await fetch(url, options);
+    const contentType = response.headers.get('content-type');
+    
+    // Parse response based on content type
+    let data;
+    if (contentType && contentType.includes('application/json')) {
+      data = await response.json();
+    } else {
+      data = await response.text();
+    }
+    
+    res.status(response.status).json(data);
   } catch (error) {
     console.error('Proxy error:', error);
-    res.status(500).json({ error: 'Proxy error', details: error.message });
+    res.status(500).json({ 
+      error: 'Proxy error', 
+      details: error.message,
+      backend_url: API_URL 
+    });
   }
 });
 
