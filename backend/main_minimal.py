@@ -4,11 +4,13 @@ MedIntel Backend - Minimal Production Version for Railway
 
 import logging
 import os
+from typing import Optional
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -82,17 +84,22 @@ async def api_status():
     }
 
 
+# Request models
+class ChatRequest(BaseModel):
+    message: str
+    sessionId: Optional[str] = None
+
+
 @app.post("/api/v1/chat")
-async def chat(request: dict):
-    """Basic chat endpoint"""
+async def chat_v1(chat_request: ChatRequest):
+    """Chat endpoint v1"""
     try:
-        message = request.get("message", "")
-        logger.info(f"Received chat message: {message}")
+        logger.info(f"Received chat message: {chat_request.message}")
         
         return {
-            "response": f"Echo: {message}",
+            "response": f"MedIntel AI: I received your message - '{chat_request.message}'. This is a minimal deployment. Full AI features require complete setup with ML models.",
             "status": "success",
-            "note": "This is a minimal version. Full AI features require complete deployment."
+            "sessionId": chat_request.sessionId or "demo-session"
         }
     except Exception as e:
         logger.error(f"Chat error: {e}")
@@ -103,9 +110,33 @@ async def chat(request: dict):
 
 
 @app.post("/api/chat")
-async def chat_alt(request: dict):
-    """Alternative chat endpoint"""
-    return await chat(request)
+async def chat_simple(request: Request):
+    """Alternative chat endpoint - accepts any JSON"""
+    try:
+        body = await request.json()
+        message = body.get("message", body.get("text", ""))
+        logger.info(f"Received chat message: {message}")
+        
+        return {
+            "response": f"MedIntel AI: I received your message - '{message}'. This is a minimal deployment.",
+            "status": "success",
+            "data": body
+        }
+    except Exception as e:
+        logger.error(f"Chat error: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": str(e), "message": "Chat processing failed"}
+        )
+
+
+# Middleware to log all requests
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"📨 {request.method} {request.url.path}")
+    response = await call_next(request)
+    logger.info(f"📤 Response status: {response.status_code}")
+    return response
 
 
 # Global exception handler
