@@ -133,9 +133,45 @@ async def chat_v1(chat_request: ChatRequest):
 
 
 @app.post("/v1/chat")
-async def chat_v1_no_prefix(chat_request: ChatRequest):
-    """Chat endpoint v1 without /api prefix (for proxy)"""
-    return await chat_v1(chat_request)
+async def chat_v1_no_prefix(request: Request):
+    """Chat endpoint v1 without /api prefix (for proxy) - accepts any JSON"""
+    try:
+        body = await request.json()
+        logger.info(f"Received request body: {body}")
+        
+        # Get message from various possible fields
+        msg = body.get("question") or body.get("message") or body.get("text") or ""
+        mode = body.get("mode", "student")
+        student_mode = body.get("student_mode", False)
+        session_id = body.get("session_id", "demo-session")
+        
+        logger.info(f"Parsed - question: {msg}, mode: {mode}")
+        
+        response_text = f"Hello! I'm MedIntel AI assistant. You said: '{msg}'. "
+        
+        if student_mode:
+            response_text += "I'm running in student mode to help with your medical learning. "
+        
+        response_text += "Note: This is a minimal deployment. Full AI features with medical analysis require complete setup with ML models."
+        
+        return {
+            "response": response_text,
+            "summary": "Demo Response",
+            "content": response_text,
+            "status": "success",
+            "emotion": "neutral",
+            "riskLevel": "Green",
+            "confidence": "Demo",
+            "nextSteps": ["This is a demo response", "Full features coming soon"],
+            "sources": ["MedIntel Demo System"],
+            "sessionId": session_id
+        }
+    except Exception as e:
+        logger.error(f"Chat error: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": str(e), "message": "Chat processing failed"}
+        )
 
 
 @app.post("/api/chat")
