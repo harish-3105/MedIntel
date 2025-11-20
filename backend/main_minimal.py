@@ -102,6 +102,12 @@ async def chat(request: dict):
         )
 
 
+@app.post("/api/chat")
+async def chat_alt(request: dict):
+    """Alternative chat endpoint"""
+    return await chat(request)
+
+
 # Global exception handler
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc):
