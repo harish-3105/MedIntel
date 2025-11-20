@@ -86,20 +86,43 @@ async def api_status():
 
 # Request models
 class ChatRequest(BaseModel):
-    message: str
-    sessionId: Optional[str] = None
+    question: Optional[str] = None
+    message: Optional[str] = None
+    context: Optional[str] = None
+    conversation_history: Optional[list] = None
+    model_provider: Optional[str] = "openai"
+    student_mode: Optional[bool] = False
+    mode: Optional[str] = "student"
+    session_id: Optional[str] = None
+    user_profile: Optional[dict] = None
 
 
 @app.post("/api/v1/chat")
 async def chat_v1(chat_request: ChatRequest):
     """Chat endpoint v1"""
     try:
-        logger.info(f"Received chat message: {chat_request.message}")
+        # Get message from either question or message field
+        msg = chat_request.question or chat_request.message or ""
+        logger.info(f"Received chat - question: {msg}, mode: {chat_request.mode}")
+        
+        response_text = f"Hello! I'm MedIntel AI assistant. You said: '{msg}'. "
+        
+        if chat_request.student_mode:
+            response_text += "I'm running in student mode to help with your medical learning. "
+        
+        response_text += "Note: This is a minimal deployment. Full AI features with medical analysis require complete setup with ML models."
         
         return {
-            "response": f"MedIntel AI: I received your message - '{chat_request.message}'. This is a minimal deployment. Full AI features require complete setup with ML models.",
+            "response": response_text,
+            "summary": "Demo Response",
+            "content": response_text,
             "status": "success",
-            "sessionId": chat_request.sessionId or "demo-session"
+            "emotion": "neutral",
+            "riskLevel": "Green",
+            "confidence": "Demo",
+            "nextSteps": ["This is a demo response", "Full features coming soon"],
+            "sources": ["MedIntel Demo System"],
+            "sessionId": chat_request.session_id or "demo-session"
         }
     except Exception as e:
         logger.error(f"Chat error: {e}")
